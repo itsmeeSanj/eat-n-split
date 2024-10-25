@@ -150,24 +150,45 @@ const FormAddForm = ({ onAddFriend }) => {
 };
 
 const FormSplitBill = ({ data }) => {
+  const [bill, setBill] = React.useState(0);
+  const [myExpenses, setMyExpenses] = React.useState(0);
+  const [payingBill, setPayingBill] = React.useState("");
+
+  const handleSubmitBill = (e) => {
+    e.preventDefault();
+    if (!bill || !myExpenses) return;
+    console.log("first");
+  };
+
   return (
-    <form className='form-split-bill'>
+    <form className='form-split-bill' onSubmit={handleSubmitBill}>
       <h2>SPLIT A BILL WITH {data?.name}</h2>
 
       {/*  */}
       <label>💰Bill Value</label>
-      <input type='text' />
+      <input
+        type='text'
+        value={bill}
+        onChange={(e) => setBill(e.target.value)}
+      />
 
       <label>🙆‍♂️Your expenses</label>
-      <input type='text' />
+      <input
+        type='text'
+        value={data?.myExpenses}
+        onChange={(e) => setMyExpenses(e.target.value)}
+      />
 
       <label>🙆{data?.name} Expenses</label>
       <input type='text' value={data?.balance} disabled />
 
       <label>🤑Who is paying bill?</label>
-      <select>
+      <select
+        value={payingBill}
+        onChange={(e) => setPayingBill(e.target.value)}
+      >
         <option value='you'>You</option>
-        <option value='me'>{data?.name}</option>
+        <option value={data?.name}>{data?.name}</option>
       </select>
 
       <Button>Split Bill</Button>
